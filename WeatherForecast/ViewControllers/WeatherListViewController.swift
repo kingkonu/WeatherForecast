@@ -7,6 +7,20 @@
 
 import UIKit
 
+enum Link {
+    case imageURL
+    case weatherURL
+
+    var url: URL {
+        switch self {
+        case .imageURL:
+            return URL(string: "https://openweathermap.org/current")!
+        case .weatherURL:
+            return URL(string: "https://openweathermap.org/current")!
+        }
+    }
+}
+
 final class WeatherListViewController: UITableViewController {
     
     private let weatherList = Weather.getWeather()
@@ -33,7 +47,29 @@ extension WeatherListViewController {
         let weather = weatherList[indexPath.row]
         content.text = weather.main
         content.secondaryText = weather.description
+        content.image = UIImage(named: "cloud.sun.bolt")
         cell.contentConfiguration = content
         return cell
     }
 }
+
+// MARK: - Networking
+extension WeatherListViewController {
+    private func fetchWeather() {
+        URLSession.shared.dataTask(with: Link.weatherURL.url) { data, _, error in
+            guard let data else {
+                print(error?.localizedDescription ?? "No error description")
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let weather = try decoder.decode(Weather.self, from: data)
+                print(weather)
+            }catch {
+                print(error.localizedDescription)
+            }
+        }.resume()
+    }
+}
+
