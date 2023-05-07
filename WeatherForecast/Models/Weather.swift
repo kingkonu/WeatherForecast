@@ -10,10 +10,6 @@ import Foundation
 struct Weather: Decodable {
     let main: String
     let description: String
-    
-    var title: String {
-        "\(main) - \(description)"
-    }
 
     static func getWeather() -> [Weather] {
         [
@@ -21,4 +17,18 @@ struct Weather: Decodable {
             Weather(main: "Sunny", description: "Good weather")
         ]
     }
+}
+
+struct Temperatura: Decodable {
+    let temp: Double
+    let feels_like: Double
+    let temp_min: Double
+    let temp_max: Double
+    let pressure: Int
+    let humidity: Int
+}
+
+struct WeatherInfo: Decodable {
+    let weather: [Weather]
+    let main: Temperatura
 }

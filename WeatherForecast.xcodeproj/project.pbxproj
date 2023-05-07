@@ -58,10 +58,10 @@
 		9FFA5EF12A07C0A000CD5FB6 /* WeatherForecast */ = {
 			isa = PBXGroup;
 			children = (
-				9FFA5F092A07C36F00CD5FB6 /* App */,
 				9FFA5F082A07C35C00CD5FB6 /* ViewControllers */,
 				9FFA5F0B2A07C3A800CD5FB6 /* Models */,
 				9FFA5F0A2A07C38800CD5FB6 /* Storyboards */,
+				9FFA5F092A07C36F00CD5FB6 /* App */,
 				9FFA5EFB2A07C0A100CD5FB6 /* Assets.xcassets */,
 				9FFA5F002A07C0A100CD5FB6 /* Info.plist */,
 			);

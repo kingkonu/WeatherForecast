@@ -7,36 +7,19 @@
 
 import UIKit
 
-enum Link {
-    case imageURL
-    case weatherURL
-
-    var url: URL {
-        switch self {
-        case .imageURL:
-            return URL(string: "https://openweathermap.org/current")!
-        case .weatherURL:
-            return URL(string: "https://openweathermap.org/current")!
-        }
-    }
-}
-
 final class WeatherListViewController: UITableViewController {
     
     private let weatherList = Weather.getWeather()
-    
+    private let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=c774940a30af6126864b74ef99b7f447")!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        fetchWeather()
     }
 }
 
 //MARK: - UITableViewDataSource
 extension WeatherListViewController {
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return weatherList.count
     }
@@ -56,7 +39,7 @@ extension WeatherListViewController {
 // MARK: - Networking
 extension WeatherListViewController {
     private func fetchWeather() {
-        URLSession.shared.dataTask(with: Link.weatherURL.url) { data, _, error in
+        URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data else {
                 print(error?.localizedDescription ?? "No error description")
                 return
@@ -64,9 +47,9 @@ extension WeatherListViewController {
 
             do {
                 let decoder = JSONDecoder()
-                let weather = try decoder.decode(Weather.self, from: data)
+                let weather = try decoder.decode(WeatherInfo.self, from: data)
                 print(weather)
-            }catch {
+            } catch {
                 print(error.localizedDescription)
             }
         }.resume()
