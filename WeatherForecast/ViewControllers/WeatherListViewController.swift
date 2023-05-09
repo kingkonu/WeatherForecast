@@ -10,7 +10,6 @@ import UIKit
 final class WeatherListViewController: UITableViewController {
     
     private let weatherList = Weather.getWeather()
-    private let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=c774940a30af6126864b74ef99b7f447")!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +38,7 @@ extension WeatherListViewController {
 // MARK: - Networking
 extension WeatherListViewController {
     private func fetchWeather() {
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=c774940a30af6126864b74ef99b7f447") else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data else {
                 print(error?.localizedDescription ?? "No error description")
